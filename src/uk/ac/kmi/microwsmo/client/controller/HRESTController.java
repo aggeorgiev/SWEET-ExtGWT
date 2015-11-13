@@ -79,8 +79,8 @@ public final class HRESTController {
 		httpRequest.open("POST", "../logger", true);
 		// set the header
 		httpRequest.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-		httpRequest.setRequestHeader("content-length", parameters.length);
-		httpRequest.setRequestHeader("connection", "close");
+		//httpRequest.setRequestHeader("content-length", parameters.length);
+		//httpRequest.setRequestHeader("connection", "close");
 		httpRequest.send(parameters);
 	}
 	}-*/;

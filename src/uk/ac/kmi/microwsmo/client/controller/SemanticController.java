@@ -83,8 +83,8 @@ public final class SemanticController {
 		httpRequest.open("POST", "../logger", true);
 		// set the header
 		httpRequest.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-		httpRequest.setRequestHeader("content-length", parameters.length);
-		httpRequest.setRequestHeader("connection", "close");
+		//httpRequest.setRequestHeader("content-length", parameters.length);
+		//httpRequest.setRequestHeader("connection", "close");
 		httpRequest.send(parameters);
 	}
 	}-*/;
@@ -112,8 +112,8 @@ public final class SemanticController {
 			httpRequest.open("POST", "../loadonto", true);
 			// set the header
 			httpRequest.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-			httpRequest.setRequestHeader("content-length", parameters.length);
-			httpRequest.setRequestHeader("connection", "close");
+			//httpRequest.setRequestHeader("content-length", parameters.length);
+			//httpRequest.setRequestHeader("connection", "close");
 			httpRequest.send(parameters);
 			// callback function
 			httpRequest.onreadystatechange = function() {
@@ -137,13 +137,14 @@ public final class SemanticController {
 			httpRequest.open("POST", "../watson", true);
 			// set the header
 			httpRequest.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-			httpRequest.setRequestHeader("content-length", parameters.length);
-			httpRequest.setRequestHeader("connection", "close");
+			//httpRequest.setRequestHeader("content-length", parameters.length);
+			//httpRequest.setRequestHeader("connection", "close");
 			httpRequest.send(parameters);
 			// callback function
 			httpRequest.onreadystatechange = function() {
 				if( httpRequest.readyState == 4 && httpRequest.status == 200) {
 					var result = httpRequest.responseText;
+					console.log(result);
 					if( viewMore ) {
 						@uk.ac.kmi.microwsmo.client.controller.SemanticController::nextServicePropertiesAdding(Ljava/lang/String;Ljava/lang/String;)(result,keyword);
 					} else {
@@ -165,8 +166,8 @@ public final class SemanticController {
 			httpRequest.open("POST", "../watson", true);
 			// set the header
 			httpRequest.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-			httpRequest.setRequestHeader("content-length", parameters.length);
-			httpRequest.setRequestHeader("connection", "close");
+			//httpRequest.setRequestHeader("content-length", parameters.length);
+			//httpRequest.setRequestHeader("connection", "close");
 			httpRequest.send(parameters);
 			// callback function
 			httpRequest.onreadystatechange = function() {
@@ -195,8 +196,10 @@ public final class SemanticController {
 			Message.show(Message.NO_WATSON_RESULT);
 			return;
 		}
+
 		BaseTreeItem keywordItem = new BaseTreeItem(keyword, CSSIconImage.TERM);
 		tree.addRootItem(keywordItem);
+
 		String[] stringSplitted = result.split("<!>");
 		int nextResults = new Integer(stringSplitted[0]);
 		stringSplitted = stringSplitted[1].split("<&>");
@@ -221,6 +224,7 @@ public final class SemanticController {
 			linkItem.setID("viewMore" + keyword);
 			tree.addItem(keywordItem, linkItem);
 		}
+
 	}
 	
 	private static void firstOntologyDomainAdding(String result, String keyword) {
@@ -378,8 +382,8 @@ public final class SemanticController {
 		httpRequest.open("POST", "../watson", true);
 		// set the header
 		httpRequest.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-		httpRequest.setRequestHeader("content-length", parameters.length);
-		httpRequest.setRequestHeader("connection", "close");
+		//httpRequest.setRequestHeader("content-length", parameters.length);
+		//httpRequest.setRequestHeader("connection", "close");
 		httpRequest.send(parameters);
 		// callback function
 		httpRequest.onreadystatechange = function() {

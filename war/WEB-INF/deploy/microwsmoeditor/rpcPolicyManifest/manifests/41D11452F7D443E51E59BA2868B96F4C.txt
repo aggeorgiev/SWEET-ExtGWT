@@ -1,0 +1,2 @@
+serviceClass: uk.ac.kmi.microwsmo.client.MicroWSMODataService
+path: 311A316C59FF091C73C7803988684825.gwt.rpc

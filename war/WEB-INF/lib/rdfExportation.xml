@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:msm="http://cms-wg.sti2.org/ns/minimal-service-model#" xmlns:hr="http://www.wsmo.org/ns/hrests#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:sawsdl="http://www.w3.org/ns/sawsdl#" xmlns:wsl="http://www.wsmo.org/ns/wsmo-lite#" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<msm:Service rdf:ID="service1">
+<rdfs:isDefinedBy rdf:resource=""/>
+<rdfs:label>flickr.photos.comments.getList</rdfs:label>
+<msm:hasOperation>
+<msm:Operation rdf:ID="getList">
+<msm:hasInput>
+<msm:MessageContent rdf:ID="input1">
+<msm:hasOptionalPart>
+<msm:MessagePart rdf:ID="param1"/>
+</msm:hasOptionalPart>
+<msm:hasOptionalPart>
+<msm:MessagePart rdf:ID="param2"/>
+</msm:hasOptionalPart>
+<msm:hasOptionalPart>
+<msm:MessagePart rdf:ID="param3"/>
+</msm:hasOptionalPart>
+<msm:hasOptionalPart>
+<msm:MessagePart rdf:ID="param4"/>
+</msm:hasOptionalPart>
+</msm:MessageContent>
+</msm:hasInput>
+<msm:hasOutput>
+<msm:MessageContent rdf:ID="output1">
+<msm:hasOptionalPart>
+<msm:MessagePart rdf:ID="param5"/>
+</msm:hasOptionalPart>
+</msm:MessageContent>
+</msm:hasOutput>
+</msm:Operation>
+</msm:hasOperation>
+</msm:Service>
+</rdf:RDF>

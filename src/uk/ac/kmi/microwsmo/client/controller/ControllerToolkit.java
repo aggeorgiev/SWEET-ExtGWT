@@ -82,6 +82,7 @@ public final class ControllerToolkit {
 	
 	private static String trim(String stringa) { 
 		return stringa.trim();
+		//return stringa;
 	}
 	
 	/**
@@ -90,9 +91,18 @@ public final class ControllerToolkit {
 	 * @return the selected text of the iFrame.
 	 */
 	public static native String getTextSelected() /*-{
+		var selection;
 		var webPage = @uk.ac.kmi.microwsmo.client.controller.ControllerToolkit::getWebPage()();
-		var selection = webPage.contentDocument.getSelection(); 
 		
+        if (webPage.contentDocument.getSelection) {  // all browsers, except IE before version 9
+            selection = webPage.contentDocument.getSelection().toString();
+        }
+        else {
+            if (webPage.contentDocument.selection) {        // Internet Explorer
+                selection = webPage.contentDocument.selection.createRange().text;
+            }
+        }		
+		//var selection = webPage.contentDocument.getSelection(); 
 		//console.log(webPage.contentDocument);
 		//console.log(selection);
 		return @uk.ac.kmi.microwsmo.client.controller.ControllerToolkit::trim(Ljava/lang/String;)(selection);
@@ -173,8 +183,8 @@ public final class ControllerToolkit {
 			var parameter = "method=" + method;
 			// set the header
 			httpRequest.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-			httpRequest.setRequestHeader("content-length", parameter.length);
-			httpRequest.setRequestHeader("connection", "close");
+			//httpRequest.setRequestHeader("content-length", parameter.length);
+			//httpRequest.setRequestHeader("connection", "close");
 			httpRequest.send(parameter);
 			httpRequest.onreadystatechange = function() {
 				if( httpRequest.readyState == 4 && httpRequest.status == 200) {
@@ -310,8 +320,8 @@ public final class ControllerToolkit {
 			httpRequest.open("POST", "../save", true);
 			// set the header
 			httpRequest.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-			httpRequest.setRequestHeader("content-length", parameter.length);
-			httpRequest.setRequestHeader("connection", "close");
+			//httpRequest.setRequestHeader("content-length", parameter.length);
+			//httpRequest.setRequestHeader("connection", "close");
 			// send the parameter
 			httpRequest.send(parameter);
 			httpRequest.onreadystatechange = function(){
@@ -344,8 +354,8 @@ public final class ControllerToolkit {
 			httpRequest.open("POST", "../export", true);
 			// set the header
 			httpRequest.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-			httpRequest.setRequestHeader("content-length", parameter.length);
-			httpRequest.setRequestHeader("connection", "close");
+			//httpRequest.setRequestHeader("content-length", parameter.length);
+			//httpRequest.setRequestHeader("connection", "close");
 			// send the parameter
 			httpRequest.send(parameter);
 			httpRequest.onreadystatechange = function(){
@@ -388,8 +398,8 @@ public final class ControllerToolkit {
 					httpRequest.open("POST", "../proxy", true);
 					// set the header
 					httpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-					httpRequest.setRequestHeader("Content-length", parameters.length);
-					httpRequest.setRequestHeader("Connection", "close");
+					//httpRequest.setRequestHeader("Content-length", parameters.length);
+					//httpRequest.setRequestHeader("Connection", "close");
 					httpRequest.onreadystatechange = function(){
 						if( httpRequest.readyState == 4 && httpRequest.status == 200 ) {
 							var webPage = @uk.ac.kmi.microwsmo.client.controller.ControllerToolkit::getWebPage()();
@@ -584,8 +594,8 @@ public final class ControllerToolkit {
 			httpRequest.open("POST", "../savetorepo", true);
 			// set the header
 			httpRequest.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-			httpRequest.setRequestHeader("content-length", parameter.length);
-			httpRequest.setRequestHeader("connection", "close");
+			//httpRequest.setRequestHeader("content-length", parameter.length);
+			//httpRequest.setRequestHeader("connection", "close");
 			httpRequest.onreadystatechange = function(){
 				if( httpRequest.readyState == 4 && httpRequest.status == 200 ) {
 					if( httpRequest.responseText != "null" && httpRequest.responseText != "" ) {

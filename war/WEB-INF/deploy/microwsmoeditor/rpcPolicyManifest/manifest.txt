@@ -1,0 +1,3 @@
+# Module microwsmoeditor
+# RPC service class, partial path of RPC policy file
+uk.ac.kmi.microwsmo.client.MicroWSMODataService, 311A316C59FF091C73C7803988684825.gwt.rpc

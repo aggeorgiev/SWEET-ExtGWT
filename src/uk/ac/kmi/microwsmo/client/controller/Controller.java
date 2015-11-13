@@ -20,7 +20,7 @@ package uk.ac.kmi.microwsmo.client.controller;
 
 import java.util.List;
 
-import org.eclipse.swt.internal.carbon.AlertStdCFStringAlertParamRec;
+//import org.eclipse.swt.internal.carbon.AlertStdCFStringAlertParamRec;
 
 import uk.ac.kmi.microwsmo.client.MicroWSMOeditor;
 import uk.ac.kmi.microwsmo.client.util.CSSIconImage;
@@ -89,8 +89,8 @@ public final class Controller extends KeyListener implements Listener<ComponentE
 		httpRequest.open("POST", "../logger", true);
 		// set the header
 		httpRequest.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-		httpRequest.setRequestHeader("content-length", parameters.length);
-		httpRequest.setRequestHeader("connection", "close");
+		//httpRequest.setRequestHeader("content-length", parameters.length);
+		//httpRequest.setRequestHeader("connection", "close");
 		httpRequest.send(parameters);
 	}
 	}-*/;
@@ -155,7 +155,8 @@ public final class Controller extends KeyListener implements Listener<ComponentE
 	}
 	
 	public native void prova() /*-{
-		var iframe = $doc.getElementById("webPageDisplay").lastChild.firstChild.firstChild.firstChild;
+		//var iframe = $doc.getElementById("webPageDisplay").lastChild.firstChild.firstChild.firstChild;
+		var iframe = $doc.getElementById("webPageDisplay").lastChild.firstChild.firstChild;
 		iframe.contentWindow.callProxy('http://www.google.it');
 	}-*/;
 	

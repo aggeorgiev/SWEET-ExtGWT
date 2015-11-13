@@ -8,8 +8,10 @@ import java.util.Map;
 
 import javax.xml.rpc.ServiceException;
 
+import uk.ac.open.kmi.watson.clientapi.EntityResult;
 import uk.ac.open.kmi.watson.clientapi.EntitySearch;
 import uk.ac.open.kmi.watson.clientapi.EntitySearchServiceLocator;
+import uk.ac.open.kmi.watson.clientapi.SearchConf;
 
 public class ServicePropertiesRetriever {
 	
@@ -27,18 +29,28 @@ public class ServicePropertiesRetriever {
 	 * @throws IOException
 	 * @throws ServiceException 
 	 */
+	@SuppressWarnings("static-access")
 	public String getServiceProperties(String keyword) throws IOException {
 		String[] semanticDocuments = sdCrawler.searchByKeywordPaginated(keyword);
 		// create the data structure
 		Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 		ArrayList<String> ontologies = null;
+        SearchConf conf = new SearchConf();
+        conf.setScope(SearchConf.LABEL+conf.LOCAL_NAME+conf.LITERAL);
+        conf.setEntities(SearchConf.CLASS+SearchConf.INDIVIDUAL+conf.PROPERTY);
+        conf.setMatch(SearchConf.TOKEN_MATCH);
+        conf.setEntitiesInfo(SearchConf.ENT_TYPE_INFO+SearchConf.ENT_ANYRELATIONFROM_INFO+SearchConf.ENT_ANYRELATIONTO_INFO);		
 		// connect to the server
 		for( int i = 0; i < semanticDocuments.length - 1; i++ ) {
 			String ontoURI = semanticDocuments[i];
-			String[] entities = entityEngine.getEntitiesByKeyword(ontoURI, keyword);
-			for( String entityURI : entities ) {
-				String type = entityEngine.getType(ontoURI, entityURI);
-				String key = type + "<:>" + entityURI;
+			//String[] entities = entityEngine.getEntitiesByKeyword(ontoURI, keyword);
+			EntityResult[] entities = entityEngine.getEntitiesByKeyword(ontoURI, keyword, conf);
+			if (entities!=null) for (EntityResult entity : entities) {
+			//for( String entityURI : entities ) {
+				//String type = entityEngine.getType(ontoURI, entityURI);
+				String type = entity.getType();
+				//String key = type + "<:>" + entityURI;
+				String key = type + "<:>" + entity.getURI();
 				// if the map doesn't contain the entity
 				if( !map.containsKey(key) ) {
 					// add this entity with the new ontology retrieved

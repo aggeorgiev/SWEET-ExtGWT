@@ -1,6 +1,7 @@
 package uk.ac.kmi.microwsmo.server.servlet;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -44,7 +45,7 @@ import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.HTTPHeader;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ResponseTextHandler;
-import com.google.gwt.user.client.impl.HTTPRequestImpl;
+//import com.google.gwt.user.client.impl.HTTPRequestImpl;
 import com.google.appengine.api.urlfetch.URLFetchService;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 
@@ -102,8 +103,10 @@ public class Proxy extends HttpServlet {
 		url = new URL(address);
 		// create a DOM from the web page
 		Document document = getDOM();
+
 		// manipulate it, changing the relative paths, in absolute
 		document = manipulateDOM(document);
+		
 		// serialize the DOM and send the serialized version back to the client
 		serializeDOM(document, response);
 	}
@@ -127,22 +130,32 @@ public class Proxy extends HttpServlet {
 		if(lenght == -1){
 
 			HttpClient client = new HttpClient();
-			client.getHostConfiguration().setProxy("wwwcache.open.ac.uk", 80);
+			//client.getHostConfiguration().setProxy("wwwcache.open.ac.uk", 80);
 			HttpMethodBase httpMethod = null;
 			httpMethod = new GetMethod(url.toString());
 			client.executeMethod(httpMethod);
 			
 			String responseString = httpMethod.getResponseBodyAsString();
-			InputStream responseStream = new ByteArrayInputStream(responseString.getBytes("UTF-8")); 
-			
+
+			ByteArrayInputStream responseStream = new ByteArrayInputStream(responseString.getBytes("UTF-8")); 
 			//
 			/*
 			 * Retrieve the DOM from the page by the Tidy parser.
 			 * For further information: <http://tidy.sourceforge.net>,
 			 * <http://www.w3.org/People/Raggett/tidy>
 			 */
+			
 			parser = new Tidy();
+			parser.setShowWarnings(false);
+			parser.setXmlTags(false);
+			parser.setInputEncoding("UTF-8");
+			parser.setOutputEncoding("UTF-8");
+			parser.setXHTML(true);// 
+			parser.setMakeClean(true);
+
+
 			Document document = parser.parseDOM(responseStream, null);
+			//parser.pprint(document, System.out);
 			return document;
 			
 		} else {

@@ -2,6 +2,23 @@
 <web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	
 	<display-name>MicroWSMOProject</display-name>
+	<!-- 
+	  <filter>
+	    <filter-name>_ah_DevSocketFilter</filter-name>
+	    <filter-class>
+	      com.google.appengine.api.socket.dev.DevSocketFilter
+	    </filter-class>
+	    <init-param>
+	      <param-name>use-native-sockets</param-name>
+	      <param-value>true</param-value>
+	    </init-param>
+	  </filter>
+	
+	  <filter-mapping>
+	    <filter-name>_ah_DevSocketFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	  </filter-mapping>	
+	 -->
 	<servlet>
 		<description></description>
 		<display-name>proxy</display-name>
@@ -48,14 +65,15 @@
 		<servlet-class>
 		uk.ac.kmi.microwsmo.server.servlet.Watson</servlet-class>
 	</servlet>
-	<!--<servlet>
+	<!-- 
+	<servlet>
 		<description>
 		</description>
 		<display-name>sessionChecker</display-name>
 		<servlet-name>sessionChecker</servlet-name>
 		<servlet-class>
 		uk.ac.kmi.microwsmo.server.servlet.SessionChecker</servlet-class>
-	</servlet>-->
+	</servlet> -->
 	<servlet>
 		<description>
 		</description>
@@ -90,6 +108,10 @@
 	</servlet>
 	
 	<servlet-mapping>
+	  <servlet-name>MicroWSMODataService</servlet-name>
+	  <url-pattern>/microwsmoeditor/microwsmoeditor/MicroWSMODataService.do</url-pattern>
+	</servlet-mapping>	
+	<servlet-mapping>
 		<servlet-name>proxy</servlet-name>
 		<url-pattern>/proxy</url-pattern>
 	</servlet-mapping>
@@ -113,10 +135,11 @@
 		<servlet-name>watson</servlet-name>
 		<url-pattern>/watson</url-pattern>
 	</servlet-mapping>
+	<!-- 
 	<servlet-mapping>
 		<servlet-name>sessionChecker</servlet-name>
 		<url-pattern>/sessionChecker</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 	<servlet-mapping>
 		<servlet-name>updater</servlet-name>
 		<url-pattern>/updater</url-pattern>

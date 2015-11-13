@@ -31,13 +31,13 @@ function callProxy(url) {
 		http_request.open("POST", "proxy", true);
 		// set the header
 		http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		http_request.setRequestHeader("Content-length", parameters.length);
-		http_request.setRequestHeader("Connection", "close");
+		//http_request.setRequestHeader("Content-length", parameters.length);
+		//http_request.setRequestHeader("Connection", "close");
 		http_request.onreadystatechange = function(){
 			if (http_request.readyState == 4) {
 				document.getElementById("html").innerHTML = http_request.responseText;
 			}
-		}
+		};
 		// and send the parameter
 		http_request.send(parameters);
 	}

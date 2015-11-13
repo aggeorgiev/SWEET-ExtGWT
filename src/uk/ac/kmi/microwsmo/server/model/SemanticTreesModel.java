@@ -15,6 +15,7 @@ public class SemanticTreesModel {
 	}
 
 	public void addServiceProperties(String keyword, String value) {
+		System.out.println("addServiceProperties " + value);
 		// extract the number at the beginning of the string
 		String[] splitted = value.split("<!>");
 		String number = splitted[0];

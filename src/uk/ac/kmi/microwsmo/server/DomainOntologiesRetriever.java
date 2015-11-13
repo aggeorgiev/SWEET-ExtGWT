@@ -7,18 +7,28 @@ import javax.xml.rpc.ServiceException;
 
 import uk.ac.open.kmi.watson.clientapi.EntitySearch;
 import uk.ac.open.kmi.watson.clientapi.EntitySearchServiceLocator;
-import uk.ac.open.kmi.watson.clientapi.OntologySearch;
-import uk.ac.open.kmi.watson.clientapi.OntologySearchServiceLocator;
+import uk.ac.open.kmi.watson.clientapi.EntityResult;
+//import uk.ac.open.kmi.watson.clientapi.OntologySearch;
+//import uk.ac.open.kmi.watson.clientapi.OntologySearchServiceLocator;
+import uk.ac.open.kmi.watson.clientapi.SearchConf;
+import uk.ac.open.kmi.watson.clientapi.SemanticContentSearch;
+import uk.ac.open.kmi.watson.clientapi.SemanticContentSearchServiceLocator;
 
 public class DomainOntologiesRetriever {
 
 	private EntitySearch entityEngine;
-	private OntologySearch ontoEngine;
+	//private OntologySearch ontoEngine;
+	private SemanticContentSearch ontoEngine;
 	private SemanticDocumentsCrawler sdCrawler;
 	
 	public DomainOntologiesRetriever() throws ServiceException {
 		entityEngine = new EntitySearchServiceLocator().getUrnEntitySearch();
-		ontoEngine = new OntologySearchServiceLocator().getUrnOntologySearch();
+		
+		
+		//ontoEngine = new OntologySearchServiceLocator().getUrnOntologySearch();
+		SemanticContentSearchServiceLocator locator = new SemanticContentSearchServiceLocator();
+		ontoEngine = locator.getUrnSemanticContentSearch();			
+		
 		sdCrawler = new SemanticDocumentsCrawler();
 	}
 	
@@ -27,16 +37,25 @@ public class DomainOntologiesRetriever {
 	 * @return
 	 * @throws IOException
 	 */
+	@SuppressWarnings("static-access")
 	public String getDomainOntologies(String keyword) throws IOException {
 		String[] semanticDocuments = sdCrawler.searchByKeywordPaginated(keyword);
 		String result = semanticDocuments[semanticDocuments.length - 1] + "<!>";
+        SearchConf conf = new SearchConf();
+        conf.setScope(SearchConf.LABEL+conf.LOCAL_NAME+conf.LITERAL);
+        conf.setEntities(SearchConf.CLASS+SearchConf.INDIVIDUAL+conf.PROPERTY);
+        conf.setMatch(SearchConf.TOKEN_MATCH);
+        conf.setEntitiesInfo(SearchConf.ENT_TYPE_INFO+SearchConf.ENT_ANYRELATIONFROM_INFO+SearchConf.ENT_ANYRELATIONTO_INFO);			
 		for( int i = 0; i < semanticDocuments.length - 1; i++ ) {
 			String ontoURI = semanticDocuments[i];
 			result += ontoURI;
-			String[] entities = entityEngine.getEntitiesByKeyword(ontoURI, keyword);
-			for( String entityURI : entities ) {
-				String type = entityEngine.getType(ontoURI, entityURI);
-				result += "<:>" + type + "<:>" + entityURI;
+			//String[] entities = entityEngine.getEntitiesByKeyword(ontoURI, keyword);		
+	        EntityResult[] entities = entityEngine.getEntitiesByKeyword(ontoURI, keyword, conf);
+	        if (entities!=null) for (EntityResult entity : entities) {
+			//for( String entityURI : entities ) {
+				//String type = entityEngine.getType(ontoURI, entityURI);
+	        	String type = entity.getType();
+				result += "<:>" + type + "<:>" + entity.getURI();
 			}
 			result += "<&>";
 		}
